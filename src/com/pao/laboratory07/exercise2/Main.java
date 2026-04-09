@@ -1,18 +1,23 @@
 package com.pao.laboratory07.exercise2;
 
-import java.util.*;
-import com.pao.laboratory07.exercise1.OrderState;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
+
         int n = Integer.parseInt(sc.nextLine().trim());
         List<Comanda> comenzi = new ArrayList<>();
+
         int nrStandard = 0, nrDiscounted = 0, nrGift = 0;
-        double sumaStandard = 0, sumaDiscounted = 0;
+        double sumaStandard = 0, sumaDiscounted = 0, sumaGift = 0;
+
         for (int i = 0; i < n; i++) {
             String line = sc.nextLine().trim();
-            String[] tokens = line.split(" ");
+            String[] tokens = line.split("\\s+");
+
             if (tokens[0].equals("STANDARD")) {
                 String nume = tokens[1];
                 double pret = Double.parseDouble(tokens[2]);
@@ -33,19 +38,28 @@ public class Main {
                 Comanda c = new ComandaGratuita(nume);
                 comenzi.add(c);
                 nrGift++;
+                sumaGift += c.pretFinal();
             }
         }
+
         for (Comanda c : comenzi) {
             System.out.println(c.descriere());
         }
+
         System.out.println();
         System.out.println("Statistici:");
-        if (nrStandard > 0)
-            System.out.printf("STANDARD: suma = %.2f lei, numar = %d\n", sumaStandard, nrStandard);
-        if (nrDiscounted > 0)
-            System.out.printf("DISCOUNTED: suma = %.2f lei, numar = %d\n", sumaDiscounted, nrDiscounted);
-        if (nrGift > 0)
-            System.out.printf("GIFT: suma = 0.00 lei, numar = %d\n", nrGift);
-        System.out.printf("Total platit: %.2f lei\n", sumaStandard + sumaDiscounted);
+
+        if (nrStandard > 0) {
+            System.out.printf("STANDARD: suma = %.2f lei, numar = %d%n", sumaStandard, nrStandard);
+        }
+        if (nrDiscounted > 0) {
+            System.out.printf("DISCOUNTED: suma = %.2f lei, numar = %d%n", sumaDiscounted, nrDiscounted);
+        }
+        if (nrGift > 0) {
+            System.out.printf("GIFT: suma = %.2f lei, numar = %d%n", sumaGift, nrGift);
+        }
+
+        double totalPlatit = sumaStandard + sumaDiscounted + sumaGift;
+        System.out.printf("Total platit: %.2f lei%n", totalPlatit);
     }
 }

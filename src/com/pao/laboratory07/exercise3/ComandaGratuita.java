@@ -1,0 +1,24 @@
+package com.pao.laboratory07.exercise3;
+
+public final class ComandaGratuita extends Comanda {
+    public ComandaGratuita(String nume, String client) {
+        super(nume, 0.0, client);
+    }
+
+    @Override
+    public double pretFinal() {
+        return 0.0;
+    }
+
+    @Override
+    public String descriere() {
+        return String.format("GIFT: %s, gratuit [%s] - client: %s",
+                nume, stare, client);
+    }
+
+    @Override
+    public String descriereFaraStare() {
+        return String.format("GIFT: %s, gratuit - client: %s",
+                nume, client);
+    }
+}
